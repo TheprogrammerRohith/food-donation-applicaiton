@@ -37,7 +37,7 @@ public class DonorLogin extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent=new Intent(DonorLogin.this,DonorPage.class);
+            Intent intent=new Intent(DonorLogin.this,DonorHomePage.class);
             startActivity(intent);
         }
     }
@@ -84,7 +84,7 @@ public class DonorLogin extends AppCompatActivity {
                                 d_progress_bar.setVisibility(view.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(DonorLogin.this, "Login Successful", Toast.LENGTH_LONG).show();
-                                    Intent intent=new Intent(DonorLogin.this,DonorPage.class);
+                                    Intent intent=new Intent(DonorLogin.this,DonorHomePage.class);
                                     startActivity(intent);
 
 

@@ -29,8 +29,6 @@ public class CollectorRegister extends AppCompatActivity {
     private ProgressBar c_r_progressbar;
     private TextView textview;
     FirebaseAuth mAuth;
-    FirebaseDatabase db;
-    DatabaseReference reference;
     @Override
     public void onStart() {
         super.onStart();
@@ -75,23 +73,6 @@ public class CollectorRegister extends AppCompatActivity {
                     Toast.makeText(CollectorRegister.this,"enter password",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!name.isEmpty() && !phonenumber.isEmpty() && !address.isEmpty()){
-                    Users users=new Users(name,phonenumber,address,email);
-                    db=FirebaseDatabase.getInstance();
-                    reference=db.getReference().child("Collectors");
-                    reference.push().setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(CollectorRegister.this,"Successfully stored",Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-                                Toast.makeText(CollectorRegister.this, "Failed to store data", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-
-                }
                 mAuth.createUserWithEmailAndPassword(email, pwd)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -99,6 +80,15 @@ public class CollectorRegister extends AppCompatActivity {
                                 c_r_progressbar.setVisibility(view.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(CollectorRegister.this, "Successfully registered", Toast.LENGTH_SHORT).show();
+                                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    if (currentUser != null) {
+                                        String userId = currentUser.getUid();
+                                        // Save user data to Firebase using userId
+                                        saveUserDataToFirebase(userId);
+                                        // Proceed to next step (e.g., navigating to another activity)
+                                    } else {
+                                        // Handle case where currentUser is null
+                                    }
 
                                 } else {
                                     // If sign in fails, display a message to the user.
@@ -108,7 +98,48 @@ public class CollectorRegister extends AppCompatActivity {
 
                                 }
                             }
+
+                            private void saveUserDataToFirebase(String userId) {
+                                Users users=new Users(name,phonenumber,address,email);
+                                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Collectors").child(userId);
+                                DatabaseReference newDataRef = userRef.child(name);
+                                newDataRef.setValue(users);
+                            }
                         });
+//                if(!name.isEmpty() && !phonenumber.isEmpty() && !address.isEmpty()){
+//                    Users users=new Users(name,phonenumber,address,email);
+//                    db=FirebaseDatabase.getInstance();
+//                    reference=db.getReference().child("Collectors");
+//                    reference.push().setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful()){
+//                                Toast.makeText(CollectorRegister.this,"Successfully stored",Toast.LENGTH_SHORT).show();
+//                            }
+//                            else {
+//                                Toast.makeText(CollectorRegister.this, "Failed to store data", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                    });
+//
+//                }
+//                mAuth.createUserWithEmailAndPassword(email, pwd)
+//                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                c_r_progressbar.setVisibility(view.GONE);
+//                                if (task.isSuccessful()) {
+//                                    Toast.makeText(CollectorRegister.this, "Successfully registered", Toast.LENGTH_SHORT).show();
+//
+//                                } else {
+//                                    // If sign in fails, display a message to the user.
+//
+//                                    Toast.makeText(CollectorRegister.this, "Authentication failed.",
+//                                            Toast.LENGTH_SHORT).show();
+//
+//                                }
+//                            }
+//                        });
             }
         });
         textview.setOnClickListener(new View.OnClickListener() {

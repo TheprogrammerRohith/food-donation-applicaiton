@@ -2,9 +2,13 @@ package com.example.food_application;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,10 +17,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,35 +30,34 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class DonorPage extends AppCompatActivity {
+public class Donor_AddPage extends Fragment {
 
-    ImageView logout,post,back;
+    ImageView post;
     FirebaseAuth auth;
     FirebaseUser user;
     Button submit;
     EditText name,quantity;
     LinearLayout linear_layout;
+    String userId;
     ArrayList<String> list=new ArrayList<>();
+    final ArrayList<String> foodnames = new ArrayList<>();
+    final ArrayList<String> foodquantities = new ArrayList<String>();
+
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.donor_page);
-        logout=findViewById(R.id.logout);
-        post=findViewById(R.id.button);
-        back=findViewById(R.id.back);
-        name=findViewById(R.id.name);
-        quantity=findViewById(R.id.quantity);
-        final ArrayList<String> foodnames = new ArrayList<>();
-        final ArrayList<String> foodquantities = new ArrayList<String>();
-        submit=findViewById(R.id.l_l_button);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View myView= inflater.inflate(R.layout.fragment_donor_add_page, container, false);
+        post=myView.findViewById(R.id.button);
+        name=myView.findViewById(R.id.name);
+        quantity=myView.findViewById(R.id.quantity);
+        submit=myView.findViewById(R.id.l_l_button);
+
         auth=FirebaseAuth.getInstance();
         user= auth.getCurrentUser();
-        if(user==null){
-            Intent intent=new Intent(DonorPage.this,DonorLogin.class);
-            startActivity(intent);
-        }
-        else{
-            String userId = user.getUid();
+
+        if(user!=null){
+            userId = user.getUid();
             Log.d("User id",userId);
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Donors").child(userId);
             userRef.addValueEventListener(new ValueEventListener() {
@@ -84,24 +83,23 @@ public class DonorPage extends AppCompatActivity {
             });
 
         }
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String food_name=name.getText().toString();
                 String food_quantity=quantity.getText().toString();
                 if(food_name.equals("")){
-                    Toast.makeText(DonorPage.this, "enter food name", Toast.LENGTH_SHORT).show();
+                    name.setError("required..");
                     return;
                 }
                 if(food_quantity.equals("")){
-                    Toast.makeText(DonorPage.this, "enter food quantity", Toast.LENGTH_SHORT).show();
+                    quantity.setError("required..");
                     return;
                 }
                 foodnames.add(food_name);
                 foodquantities.add(food_quantity);
-                linear_layout=findViewById(R.id.linear_layout);
-                LinearLayout linearLayout = new LinearLayout(DonorPage.this);
+                linear_layout=myView.findViewById(R.id.linear_layout);
+                LinearLayout linearLayout = new LinearLayout(getContext());
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -117,11 +115,11 @@ public class DonorPage extends AppCompatActivity {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                ImageView delete=new ImageView(DonorPage.this);
+                ImageView delete=new ImageView(getContext());
                 delete.setImageResource(R.drawable.baseline_delete_24);
                 delete.setLayoutParams(del_button_layoutparams);
-                del_button_layoutparams.topMargin=30;
-                del_button_layoutparams.leftMargin=350;
+                del_button_layoutparams.topMargin=20;
+                del_button_layoutparams.leftMargin=400;
                 linearLayout.addView(delete);
 
                 delete.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +152,7 @@ public class DonorPage extends AppCompatActivity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                TextView textViewFoodName = new TextView(DonorPage.this);
+                TextView textViewFoodName = new TextView(getContext());
                 textViewFoodName.setText("Food Name - "+food_name);
                 textViewFoodName.setGravity(Gravity.CENTER);
                 textViewFoodName.setTextSize(20);
@@ -166,7 +164,7 @@ public class DonorPage extends AppCompatActivity {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                 );
-                TextView textViewFoodQuantity = new TextView(DonorPage.this);
+                TextView textViewFoodQuantity = new TextView(getContext());
                 textViewFoodQuantity.setText("Food Quantity - "+food_quantity);
                 textViewFoodQuantity.setGravity(Gravity.CENTER);
                 textViewFoodQuantity.setTextSize(20);
@@ -181,41 +179,19 @@ public class DonorPage extends AppCompatActivity {
             }
         });
 
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent= new Intent(DonorPage.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(DonorPage.this,MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FoodDetails fd=new FoodDetails(foodnames,foodquantities,list.get(1), list.get(2));
-                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("FoodDetails");
-                DatabaseReference newDataRef = userRef.child(list.get(1));
-                newDataRef.setValue(fd).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(DonorPage.this,"Successfully stored",Toast.LENGTH_SHORT).show();
-                        }
-                        else {
-                            Toast.makeText(DonorPage   .this, "Failed to store data", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                for(int i=0;i<foodnames.size();i++){
+                    FoodDetails fd=new FoodDetails(foodnames.get(i),foodquantities.get(i),list.get(1), list.get(2),userId);
+                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("FoodDetails");
+                    userRef.push().setValue(fd);
+                    Toast.makeText(getContext(),"successfully posted",Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
+
+        return myView;
     }
 }
