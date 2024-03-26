@@ -36,7 +36,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
         holder.f_quantity.setText(obj.getFoodquantity());
         holder.c_name.setText(obj.getName());
         holder.c_phno.setText(obj.getContactNo());
-
+        holder.c_address.setText(obj.getAddress());
     }
 
     @Override
@@ -46,8 +46,8 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
 
     public static class MyViewHolder2 extends RecyclerView.ViewHolder{
 
-        TextView f_name,f_quantity,c_name,c_phno;
-        Button engage;
+        TextView f_name,f_quantity,c_name,c_phno,c_address;
+        Button revert,donate;
 
         public MyViewHolder2(@NonNull View itemView) {
             super(itemView);
@@ -55,7 +55,9 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
             f_quantity=itemView.findViewById(R.id.f_quantity);
             c_name=itemView.findViewById(R.id.c_name);
             c_phno=itemView.findViewById(R.id.c_phno);
-            engage=itemView.findViewById(R.id.revert_btn);
+            c_address=itemView.findViewById(R.id.c_address);
+            revert=itemView.findViewById(R.id.revert_btn);
+            donate=itemView.findViewById(R.id.donate_btn);
         }
     }
 }

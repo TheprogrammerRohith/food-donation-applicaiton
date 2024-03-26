@@ -1,18 +1,16 @@
 package com.example.food_application;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,9 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CollectorPage extends AppCompatActivity {
 
-    private ImageView logout;
+public class Collector_ViewItems extends Fragment {
+
     FirebaseAuth auth;
     FirebaseUser user;
     private DatabaseReference dRef;
@@ -37,17 +35,12 @@ public class CollectorPage extends AppCompatActivity {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.collector_page);
-        logout=findViewById(R.id.logout);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v= inflater.inflate(R.layout.fragment_collector_view_items, container, false);
         auth=FirebaseAuth.getInstance();
         user= auth.getCurrentUser();
-
-        if(user==null){
-            Intent intent=new Intent(CollectorPage.this,CollectorLogin.class);
-            startActivity(intent);
-        }
         if(user!=null){
             list2=new ArrayList<>();
             String userId = user.getUid();
@@ -61,6 +54,7 @@ public class CollectorPage extends AppCompatActivity {
                             for(DataSnapshot ds:dataSnapshot.getChildren()){
                                 String value = (String) ds.getValue();;
                                 list2.add(value);
+                                Log.d("TAG",value);
                             }
                         }
                     }
@@ -76,21 +70,13 @@ public class CollectorPage extends AppCompatActivity {
             });
 
         }
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent= new Intent(CollectorPage.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        recyclerView=findViewById(R.id.collector_recycler_view);
+        recyclerView=v.findViewById(R.id.collector_recycler_view);
         dRef= FirebaseDatabase.getInstance().getReference().child("FoodDetails");
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=new ArrayList<>();
-        myAdapter=new MyAdapter(this,list,list2);
+        String UserId= user.getUid();
+        myAdapter=new MyAdapter(getContext(),list,list2,UserId);
         recyclerView.setAdapter(myAdapter);
         dRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,5 +93,6 @@ public class CollectorPage extends AppCompatActivity {
 
             }
         });
+        return v;
     }
 }

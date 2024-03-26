@@ -34,7 +34,7 @@ public class CollectorLogin extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            Intent intent=new Intent(CollectorLogin.this,CollectorPage.class);
+            Intent intent=new Intent(CollectorLogin.this,CollectorHomePage.class);
             startActivity(intent);
         }
     }
@@ -82,7 +82,7 @@ public class CollectorLogin extends AppCompatActivity {
                                 c_progress_bar.setVisibility(view.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(CollectorLogin.this, "Login Successful", Toast.LENGTH_LONG).show();
-                                    Intent intent=new Intent(CollectorLogin.this,CollectorPage.class);
+                                    Intent intent=new Intent(CollectorLogin.this,CollectorHomePage.class);
                                     startActivity(intent);
 
 

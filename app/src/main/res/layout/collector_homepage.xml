@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CollectorPage">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DonorHomePage">
 
     <RelativeLayout
         android:id="@+id/head"
@@ -20,18 +21,35 @@
             android:layout_centerHorizontal="true"
             android:textAppearance="?android:textAppearanceLarge"/>
         <ImageView
-            android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/outline_logout_24"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"/>
-    </RelativeLayout>
-    
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/head"
-        android:id="@+id/collector_recycler_view"/>
+            android:layout_marginRight="15sp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/logout_btn"/>
 
+    </RelativeLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/btmnav"
+        app:menu="@menu/bottom_menu2"
+        app:itemPaddingBottom="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btmnav"
+        android:layout_below="@+id/head"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </FrameLayout>
 </RelativeLayout>

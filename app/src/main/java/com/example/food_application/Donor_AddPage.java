@@ -183,9 +183,10 @@ public class Donor_AddPage extends Fragment {
             @Override
             public void onClick(View v) {
                 for(int i=0;i<foodnames.size();i++){
-                    FoodDetails fd=new FoodDetails(foodnames.get(i),foodquantities.get(i),list.get(1), list.get(2),userId);
                     DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("FoodDetails");
-                    userRef.push().setValue(fd);
+                    String id=userRef.push().getKey();
+                    FoodDetails fd=new FoodDetails(foodnames.get(i),foodquantities.get(i),list.get(1), list.get(2),userId,id);
+                    userRef.child(id).setValue(fd);
                     Toast.makeText(getContext(),"successfully posted",Toast.LENGTH_SHORT).show();
                 }
 

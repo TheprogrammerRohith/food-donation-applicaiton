@@ -1,33 +1,17 @@
 package com.example.food_application;
 
-public class Engaged {
-    String name,contactNo,address,foodname,foodquantity,id;
+public class Engaged2 {
 
-    public Engaged(){}
+    String name,contactNo,foodname,foodquantity,collectorId,id;
 
-    public Engaged(String name, String contactNo,String address, String foodname, String foodquantity,String id) {
+    public Engaged2(){}
+    public Engaged2(String name, String contactNo, String foodname, String foodquantity, String collectorId, String id) {
         this.name = name;
         this.contactNo = contactNo;
-        this.address=address;
         this.foodname = foodname;
         this.foodquantity = foodquantity;
-        this.id=id;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
+        this.collectorId = collectorId;
         this.id = id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getName() {
@@ -60,5 +44,21 @@ public class Engaged {
 
     public void setFoodquantity(String foodquantity) {
         this.foodquantity = foodquantity;
+    }
+
+    public String getCollectorId() {
+        return collectorId;
+    }
+
+    public void setCollectorId(String collectorId) {
+        this.collectorId = collectorId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
