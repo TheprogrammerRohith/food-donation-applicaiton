@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
@@ -17,6 +20,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
     Context context;
     ArrayList<Engaged> list;
 
+    String UserID;
     @NonNull
     @Override
     public MyViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -24,9 +28,10 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
         return new MyAdapter2.MyViewHolder2(v);
     }
 
-    public MyAdapter2(Context context, ArrayList<Engaged> list) {
+    public MyAdapter2(Context context, ArrayList<Engaged> list,String userID) {
         this.context = context;
         this.list = list;
+        UserID=userID;
     }
 
     @Override
@@ -37,6 +42,16 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
         holder.c_name.setText(obj.getName());
         holder.c_phno.setText(obj.getContactNo());
         holder.c_address.setText(obj.getAddress());
+        holder.donate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference DRef= FirebaseDatabase.getInstance().getReference().child("Engaged").child(UserID);
+                String id=obj.getId();
+                DRef.child(id).removeValue();
+                holder.donate.setText("Engaged");
+                holder.donate.setEnabled(false);
+            }
+        });
     }
 
     @Override
@@ -47,7 +62,7 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
     public static class MyViewHolder2 extends RecyclerView.ViewHolder{
 
         TextView f_name,f_quantity,c_name,c_phno,c_address;
-        Button revert,donate;
+        Button donate;
 
         public MyViewHolder2(@NonNull View itemView) {
             super(itemView);
@@ -56,7 +71,6 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
             c_name=itemView.findViewById(R.id.c_name);
             c_phno=itemView.findViewById(R.id.c_phno);
             c_address=itemView.findViewById(R.id.c_address);
-            revert=itemView.findViewById(R.id.revert_btn);
             donate=itemView.findViewById(R.id.donate_btn);
         }
     }

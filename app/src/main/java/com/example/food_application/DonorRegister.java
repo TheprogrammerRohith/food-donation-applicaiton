@@ -108,37 +108,7 @@ public class DonorRegister extends AppCompatActivity {
                             }
                         });
 
-//                if(!name.isEmpty() && !phonenumber.isEmpty() && !address.isEmpty()){
-//                    Users users=new Users(name,phonenumber,address,email);
-//                    String userId = mAuth.getCurrentUser().getUid();
-//                    DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Donors").child(userId);
-//
-//                    // Use push() to generate a unique key for the data
-//                    String pushKey = userRef.push().getKey();
-//
-//                    // Create a new node under the user's UID with the generated push key
-//                    DatabaseReference newDataRef = userRef.child(pushKey);
-//
-//                    // Save the data along with the user's UID
-//                    newDataRef.setValue(users);
-
-
-//                    db=FirebaseDatabase.getInstance();
-//                    reference=db.getReference().child("Donors");
-//                    reference.push().setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-//                            if(task.isSuccessful()){
-//                                Toast.makeText(DonorRegister.this,"Successfully stored",Toast.LENGTH_SHORT).show();
-//                            }
-//                            else {
-//                                Toast.makeText(DonorRegister.this, "Failed to store data", Toast.LENGTH_LONG).show();
-//                            }
-//                        }
-//                    });
-
                 }
-            //}
         });
         textview.setOnClickListener(new View.OnClickListener() {
             @Override

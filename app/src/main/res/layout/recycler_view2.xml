@@ -168,39 +168,14 @@
                     android:textAppearance="?android:textAppearanceLarge" />
             </RelativeLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/donate_btn"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/revert_btn"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="revert"
-                    android:layout_marginStart="50dp"
-                    android:background="@color/button"/>
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/donate_btn"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="donated"
-                    android:background="@color/button"/>
-            </RelativeLayout>
-        </LinearLayout>
+            android:text="donate"
+            android:layout_gravity="center"
+            android:background="@color/button"/>
 
     </LinearLayout>
 

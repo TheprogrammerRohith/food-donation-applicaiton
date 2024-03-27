@@ -46,7 +46,7 @@ public class Donor_Dashboard extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=new ArrayList<>();
-        myAdapter=new MyAdapter2(getContext(),list);
+        myAdapter=new MyAdapter2(getContext(),list,userId);
         recyclerView.setAdapter(myAdapter);
 
         dRef.addValueEventListener(new ValueEventListener() {

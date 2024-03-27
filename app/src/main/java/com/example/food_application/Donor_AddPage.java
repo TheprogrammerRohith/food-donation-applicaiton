@@ -66,7 +66,7 @@ public class Donor_AddPage extends Fragment {
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             for(DataSnapshot ds:dataSnapshot.getChildren()){
-                                String value = (String) ds.getValue();;
+                                String value = (String) ds.getValue();
                                 list.add(value);
                             }
                         }
@@ -188,6 +188,8 @@ public class Donor_AddPage extends Fragment {
                     FoodDetails fd=new FoodDetails(foodnames.get(i),foodquantities.get(i),list.get(1), list.get(2),userId,id);
                     userRef.child(id).setValue(fd);
                     Toast.makeText(getContext(),"successfully posted",Toast.LENGTH_SHORT).show();
+                    foodnames.clear();
+                    foodquantities.clear();
                 }
 
             }
