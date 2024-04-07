@@ -1,16 +1,22 @@
 package com.example.food_application;
 
+import android.app.Notification;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StyleRes;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -54,7 +60,6 @@ public class Collector_ViewItems extends Fragment {
                             for(DataSnapshot ds:dataSnapshot.getChildren()){
                                 String value = (String) ds.getValue();;
                                 list2.add(value);
-                                Log.d("TAG",value);
                             }
                         }
                     }
@@ -76,7 +81,6 @@ public class Collector_ViewItems extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=new ArrayList<>();
         String UserId= user.getUid();
-        myAdapter=new MyAdapter(getContext(),list,list2,UserId);
         recyclerView.setAdapter(myAdapter);
         dRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,7 +89,27 @@ public class Collector_ViewItems extends Fragment {
                     FoodDetails obj=ds.getValue(FoodDetails.class);
                     list.add(obj);
                 }
-                myAdapter.notifyDataSetChanged();
+                if (list.isEmpty()) {
+                    // Display a message when no items are available
+                    LinearLayout.LayoutParams textview_layout = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    TextView textView = new TextView(getContext());
+                    textView.setText("No items available.");
+                    textView.setLayoutParams(textview_layout);
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setTextSize(30);
+                    textview_layout.setMargins(30,50,30,20);
+                    recyclerView.setVisibility(View.GONE); // Hide the RecyclerView
+                    // Add the TextView to your layout
+                    // For example, if you have a LinearLayout:
+                    FrameLayout frameLayout=v.findViewById(R.id.cv_frame_layout);
+                    frameLayout.addView(textView);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE); // Show the RecyclerView
+                    myAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
@@ -93,6 +117,7 @@ public class Collector_ViewItems extends Fragment {
 
             }
         });
+        myAdapter=new MyAdapter(getContext(),list,list2,UserId);
         return v;
     }
 }

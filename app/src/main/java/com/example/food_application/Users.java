@@ -2,17 +2,26 @@ package com.example.food_application;
 
 public class Users {
 
-    String name, phonenumber, address, username;
+    String name, phonenumber, address, username,Uid;
 
     public Users() {
 
     }
 
-    public Users(String name, String phonenumber, String address, String username) {
+    public Users(String name, String phonenumber, String address, String username,String id) {
         this.name = name;
         this.phonenumber = phonenumber;
         this.address = address;
         this.username = username;
+        Uid=id;
+    }
+
+    public String getUid() {
+        return Uid;
+    }
+
+    public void setUid(String uid) {
+        Uid = uid;
     }
 
     public String getName() {

@@ -119,7 +119,7 @@ public class Donor_AddPage extends Fragment {
                 delete.setImageResource(R.drawable.baseline_delete_24);
                 delete.setLayoutParams(del_button_layoutparams);
                 del_button_layoutparams.topMargin=20;
-                del_button_layoutparams.leftMargin=400;
+                del_button_layoutparams.leftMargin=350;
                 linearLayout.addView(delete);
 
                 delete.setOnClickListener(new View.OnClickListener() {

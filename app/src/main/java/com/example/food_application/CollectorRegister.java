@@ -100,10 +100,11 @@ public class CollectorRegister extends AppCompatActivity {
                             }
 
                             private void saveUserDataToFirebase(String userId) {
-                                Users users=new Users(name,phonenumber,address,email);
+                                FirebaseUser user=mAuth.getCurrentUser();
+                                String Uid=user.getUid();
+                                Users users=new Users(name,phonenumber,address,email,Uid);
                                 DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("Collectors").child(userId);
-                                DatabaseReference newDataRef = userRef.child(name);
-                                newDataRef.setValue(users);
+                                userRef.child(name).setValue(users);
                             }
                         });
 //                if(!name.isEmpty() && !phonenumber.isEmpty() && !address.isEmpty()){

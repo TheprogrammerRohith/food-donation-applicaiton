@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/cv_frame_layout2"
     tools:context=".Collector_Dashboard">
 
     <androidx.recyclerview.widget.RecyclerView
