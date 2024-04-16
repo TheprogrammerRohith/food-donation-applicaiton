@@ -1,18 +1,17 @@
 package com.example.food_application;
 
-public class Engaged2 {
+public class CollectorPL {
 
-    String name,contactNo,address,foodname,foodquantity,collectorId,id;
+    String name,contactNo,address,foodname,foodquantity,date;
+    public CollectorPL(){}
 
-    public Engaged2(){}
-    public Engaged2(String name, String contactNo,String address, String foodname, String foodquantity, String collectorId, String id) {
+    public CollectorPL(String name, String contactNo,String address ,String foodname, String foodquantity, String date) {
         this.name = name;
         this.contactNo = contactNo;
         this.address=address;
         this.foodname = foodname;
         this.foodquantity = foodquantity;
-        this.collectorId = collectorId;
-        this.id = id;
+        this.date = date;
     }
 
     public String getAddress() {
@@ -55,19 +54,11 @@ public class Engaged2 {
         this.foodquantity = foodquantity;
     }
 
-    public String getCollectorId() {
-        return collectorId;
+    public String getDate() {
+        return date;
     }
 
-    public void setCollectorId(String collectorId) {
-        this.collectorId = collectorId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setDate(String date) {
+        this.date = date;
     }
 }

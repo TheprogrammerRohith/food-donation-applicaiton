@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
 
@@ -45,11 +47,18 @@ public class MyAdapter2 extends RecyclerView.Adapter<MyAdapter2.MyViewHolder2> {
         holder.donate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference dRef=FirebaseDatabase.getInstance().getReference().child("d_pastlistings").child(UserID);
+                String id2=dRef.push().getKey();
+                String date= DateFormat.getDateInstance().format(new Date());
+                DonorPL dpl=new DonorPL(obj.getName(),obj.getContactNo(),obj.getAddress(),obj.getFoodname(),obj.getFoodquantity(),date);
+                dRef.child(id2).setValue(dpl);
                 DatabaseReference DRef= FirebaseDatabase.getInstance().getReference().child("Engaged").child(UserID);
                 String id=obj.getId();
                 DRef.child(id).removeValue();
                 holder.donate.setText("Engaged");
                 holder.donate.setEnabled(false);
+                MyAdapter3.removeItems();
+                MyAdapter3.addItems();
             }
         });
     }

@@ -23,6 +23,7 @@ public class DonorHomePage extends AppCompatActivity {
     private ImageView logout;
     private Donor_Dashboard donorDashboard;
     private Donor_AddPage donorAddPage;
+    private DonorPastListings donorPastListings;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class DonorHomePage extends AppCompatActivity {
         frameLayout=findViewById(R.id.main_frame);
         donorDashboard=new Donor_Dashboard();
         donorAddPage=new Donor_AddPage();
+        donorPastListings=new DonorPastListings();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +53,10 @@ public class DonorHomePage extends AppCompatActivity {
                 }
                 else if (itemId==R.id.add_items) {
                     setFragment(donorAddPage);
+                    return true;
+                }
+                else if(itemId==R.id.past_list){
+                    setFragment(donorPastListings);
                     return true;
                 }
                 else{

@@ -4,17 +4,26 @@ import java.util.ArrayList;
 
 public class FoodDetails {
 
-    String name,contactNo,foodName,foodQuantity,donorId,id;
+    String name,contactNo,address,foodName,foodQuantity,donorId,id;
 
     FoodDetails(){}
 
-    public FoodDetails(String foodName, String foodQuantity, String name, String contactNo,String userId,String id) {
+    public FoodDetails(String foodName, String foodQuantity, String name, String contactNo,String address,String userId,String id) {
         this.foodName = foodName;
         this.foodQuantity = foodQuantity;
         this.name = name;
         this.contactNo = contactNo;
+        this.address=address;
         donorId=userId;
         this.id=id;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getId() {

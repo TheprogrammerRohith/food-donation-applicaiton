@@ -23,6 +23,7 @@ public class CollectorHomePage extends AppCompatActivity {
     private ImageView logout;
     private Collector_Dashboard collectorDashboard;
     private Collector_ViewItems collectorViewItems;
+    private CollectorPastListings collectorPastListings;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class CollectorHomePage extends AppCompatActivity {
         frameLayout=findViewById(R.id.main_frame);
         collectorDashboard=new Collector_Dashboard();
         collectorViewItems=new Collector_ViewItems();
+        collectorPastListings=new CollectorPastListings();
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +54,9 @@ public class CollectorHomePage extends AppCompatActivity {
                 }
                 else if (itemId==R.id.view_items) {
                     setFragment(collectorViewItems);
+                    return true;
+                } else if (itemId==R.id.past_list) {
+                    setFragment(collectorPastListings);
                     return true;
                 }
                 else{

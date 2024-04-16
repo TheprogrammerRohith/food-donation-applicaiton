@@ -50,7 +50,7 @@ public class Collector_Dashboard extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list=new ArrayList<>();
-        myAdapter3=new MyAdapter3(getContext(),list);
+        myAdapter3=new MyAdapter3(getContext(),list,UserId);
         recyclerView.setAdapter(myAdapter3);
 
         dRef.addValueEventListener(new ValueEventListener() {

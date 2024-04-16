@@ -22,21 +22,14 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     private Button donor_button,collector_button;
-    private FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mAuth=FirebaseAuth.getInstance();
-        donor_button=findViewById(R.id.donor);
 
-        FirebaseUser user=mAuth.getCurrentUser();
-        if(user!=null){
-            String uId=user.getUid();
-            
-        }
+        donor_button=findViewById(R.id.donor);
         donor_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,5 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
