@@ -92,4 +92,5 @@ public class Collector_Dashboard extends Fragment {
 
         return view;
     }
+
 }

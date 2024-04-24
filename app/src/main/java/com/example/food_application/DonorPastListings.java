@@ -7,9 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -55,7 +59,27 @@ public class DonorPastListings extends Fragment {
                     DonorPL obj=ds.getValue(DonorPL.class);
                     list.add(obj);
                 }
-                myAdapter.notifyDataSetChanged();
+                if (list.isEmpty()) {
+                    // Display a message when no items are available
+                    LinearLayout.LayoutParams textview_layout = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    TextView textView = new TextView(getContext());
+                    textView.setText("Currently Engaged items are null.");
+                    textView.setLayoutParams(textview_layout);
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setTextSize(30);
+                    textview_layout.setMargins(30,50,30,20);
+                    recyclerView.setVisibility(View.GONE); // Hide the RecyclerView
+                    // Add the TextView to your layout
+                    // For example, if you have a LinearLayout:
+                    FrameLayout frameLayout=view.findViewById(R.id.dpl);
+                    frameLayout.addView(textView);
+                } else {
+                    recyclerView.setVisibility(View.VISIBLE); // Show the RecyclerView
+                    myAdapter.notifyDataSetChanged();
+                }
             }
 
             @Override
